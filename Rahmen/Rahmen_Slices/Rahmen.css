@@ -1,0 +1,85 @@
+.buchrahmen {
+  --buchrahmen-ecke: 56px;
+  --buchrahmen-linie: 9.5px;
+  --buchrahmen-ornament-laenge: 84px;
+  --buchrahmen-ornament-breite: 16px;
+
+  position: relative;
+  box-sizing: border-box;
+  min-inline-size: 114px;
+  min-block-size: 114px;
+  padding: 22px 28px;
+}
+
+/* Der Grafikcontainer übernimmt die Außenmaße des Textblocks. */
+.buchrahmen-dekor {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  container: buchrahmen-groesse / size;
+}
+
+.buchrahmen-dekor::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border: var(--buchrahmen-ecke) solid transparent;
+  border-image: url("Rahmen.png") 224 stretch;
+}
+
+.buchrahmen-ornament {
+  position: absolute;
+  display: none;
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+}
+
+.buchrahmen-ornament-oben,
+.buchrahmen-ornament-unten {
+  left: 50%;
+  width: var(--buchrahmen-ornament-laenge);
+  height: var(--buchrahmen-ornament-breite);
+  transform: translateX(-50%);
+}
+
+.buchrahmen-ornament-oben {
+  top: calc(var(--buchrahmen-linie) - var(--buchrahmen-ornament-breite) / 2);
+  background-image: url("Ornamente/oben.png");
+}
+
+.buchrahmen-ornament-unten {
+  bottom: calc(var(--buchrahmen-linie) - var(--buchrahmen-ornament-breite) / 2);
+  background-image: url("Ornamente/unten.png");
+}
+
+.buchrahmen-ornament-links,
+.buchrahmen-ornament-rechts {
+  top: 50%;
+  width: var(--buchrahmen-ornament-breite);
+  height: var(--buchrahmen-ornament-laenge);
+  transform: translateY(-50%);
+}
+
+.buchrahmen-ornament-links {
+  left: calc(var(--buchrahmen-linie) - var(--buchrahmen-ornament-breite) / 2);
+  background-image: url("Ornamente/links.png");
+}
+
+.buchrahmen-ornament-rechts {
+  right: calc(var(--buchrahmen-linie) - var(--buchrahmen-ornament-breite) / 2);
+  background-image: url("Ornamente/rechts.png");
+}
+
+@container buchrahmen-groesse (min-width: 248px) {
+  .buchrahmen-ornament-oben,
+  .buchrahmen-ornament-unten {
+    display: block;
+  }
+}
+
+@container buchrahmen-groesse (min-height: 224px) {
+  .buchrahmen-ornament-links,
+  .buchrahmen-ornament-rechts {
+    display: block;
+  }
+}

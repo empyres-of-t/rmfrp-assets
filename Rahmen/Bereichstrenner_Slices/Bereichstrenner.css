@@ -1,0 +1,78 @@
+.buchtrenner-waagerecht,
+.buchtrenner-senkrecht {
+  --buchtrenner-quer: 16px;
+  --buchtrenner-ende: 28px;
+}
+
+.buchtrenner-waagerecht {
+  display: flex;
+  align-items: center;
+  min-inline-size: calc(2 * var(--buchtrenner-ende));
+  min-block-size: var(--buchtrenner-quer);
+  container: buchtrenner-breite / inline-size;
+}
+
+/* Die Linien füllen den Platz beiderseits der Mitte. Die Ranken behalten ihr Maß. */
+.buchtrenner-waagerecht::before,
+.buchtrenner-waagerecht::after {
+  content: "";
+  flex: 1 1 0;
+  min-inline-size: var(--buchtrenner-ende);
+  block-size: var(--buchtrenner-quer);
+  background-repeat: no-repeat;
+  background-size:
+    var(--buchtrenner-ende) var(--buchtrenner-quer),
+    calc(100% - var(--buchtrenner-ende)) var(--buchtrenner-quer);
+}
+
+.buchtrenner-waagerecht::before {
+  background-image: url("Waagerecht/links.png"), url("Waagerecht/linie.png");
+  background-position: left center, right center;
+}
+
+.buchtrenner-waagerecht::after {
+  background-image: url("Waagerecht/rechts.png"), url("Waagerecht/linie.png");
+  background-position: right center, left center;
+}
+
+.buchtrenner-mit-titel {
+  min-inline-size: calc(2 * var(--buchtrenner-ende) + 28px);
+}
+
+.buchtrenner-titel {
+  min-inline-size: 0;
+  padding-inline: 8px;
+  text-align: center;
+  overflow-wrap: anywhere;
+}
+
+.buchtrenner-titel img {
+  max-inline-size: 100%;
+  block-size: auto;
+  vertical-align: middle;
+}
+
+/* Unter 148 px bilden die beiden Seiten eine durchgehende Linie. */
+.buchtrenner-mitte {
+  display: none;
+  flex: 0 0 92px;
+  block-size: var(--buchtrenner-quer);
+  background: url("Waagerecht/mitte.png") center / 100% 100% no-repeat;
+}
+
+@container buchtrenner-breite (min-width: 148px) {
+  .buchtrenner-mitte {
+    display: block;
+  }
+}
+
+.buchtrenner-senkrecht {
+  inline-size: var(--buchtrenner-quer);
+  min-block-size: calc(2 * var(--buchtrenner-ende));
+  align-self: stretch;
+  justify-self: center;
+  background:
+    url("Senkrecht/oben.png") center top / var(--buchtrenner-quer) var(--buchtrenner-ende) no-repeat,
+    url("Senkrecht/unten.png") center bottom / var(--buchtrenner-quer) var(--buchtrenner-ende) no-repeat,
+    url("Senkrecht/linie.png") center / var(--buchtrenner-quer) calc(100% - 2 * var(--buchtrenner-ende)) no-repeat;
+}
